@@ -1,0 +1,43 @@
+#!/system/bin/sh
+# Recovery-compatibility installer stub.
+# Normal install path is the KernelSU / Magisk manager, which installs
+# the zip directly and does NOT execute this file.
+
+umask 0
+OUTFD=$2
+ZIPFILE=$3
+
+ui_print() { echo ui_print "$1" 1>&$OUTFD; }
+
+ui_print "****************************"
+ui_print "  CPU Mode Control  v1.0.0"
+ui_print "****************************"
+ui_print "Extracting..."
+
+TMP=/tmp/cpumodes_inst
+DEST=/data/adb/modules_update
+rm -rf "$TMP"
+mkdir -p "$TMP" "$DEST"
+
+unzip -o "$ZIPFILE" -d "$TMP" >/dev/null 2>&1
+
+if [ ! -f "$TMP/module.prop" ]; then
+    ui_print "ERROR: extraction failed"
+    rm -rf "$TMP"
+    exit 1
+fi
+
+rm -rf "$DEST/cpumodes"
+mkdir -p "$DEST/cpumodes"
+cd "$TMP" || exit 1
+cp -r module.prop action.sh service.sh uninstall.sh README.md scripts webroot META-INF "$DEST/cpumodes/" 2>/dev/null
+
+chmod 755 "$DEST/cpumodes/action.sh" "$DEST/cpumodes/service.sh" "$DEST/cpumodes/uninstall.sh" 2>/dev/null
+chmod 755 "$DEST/cpumodes/webroot/cgi-bin/api.sh" 2>/dev/null
+find "$DEST/cpumodes/scripts" -name '*.sh' -exec chmod 755 {} \; 2>/dev/null
+
+cd /
+rm -rf "$TMP"
+ui_print "Installed to modules_update (activates on reboot)"
+ui_print "Open with: KernelSU module action button"
+exit 0

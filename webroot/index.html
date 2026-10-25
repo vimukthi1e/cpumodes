@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>CPU Mode Control</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="hdr-left">
+    <h1>CPU Mode Control</h1>
+    <div class="subtitle">SM-G981N &middot; localhost panel</div>
+  </div>
+  <div class="hdr-right">
+    <span id="modeBadge" class="badge none">None</span>
+    <span id="wdBadge" class="wd hidden">watchdog</span>
+  </div>
+</header>
+
+<main>
+  <section class="modes">
+    <button id="btn-performance" class="mode-btn performance" data-mode="performance">
+      <span class="mb-title">Performance</span>
+      <span class="mb-sub">8 cores &middot; max clocks &middot; GPU perf</span>
+    </button>
+    <button id="btn-schedutil" class="mode-btn schedutil" data-mode="schedutil">
+      <span class="mb-title">Schedutil</span>
+      <span class="mb-sub">8 cores &middot; full range &middot; GPU tz</span>
+    </button>
+    <button id="btn-powersave" class="mode-btn powersave" data-mode="powersave">
+      <span class="mb-title">Power Save</span>
+      <span class="mb-sub">cores 0&middot;4&middot;7 &middot; min clocks</span>
+    </button>
+  </section>
+
+  <section class="cards">
+    <div class="card cluster">
+      <div class="card-title">Cluster 1 &middot; Silver <span class="cpus">CPU 0&ndash;3</span></div>
+      <div class="kv"><span>Governor</span><b id="c-silver-gov">&mdash;</b></div>
+      <div class="kv"><span>Current</span><b id="c-silver-cur">&mdash;</b></div>
+      <div class="kv"><span>Min</span><b id="c-silver-min">&mdash;</b></div>
+      <div class="kv"><span>Max</span><b id="c-silver-max">&mdash;</b></div>
+    </div>
+    <div class="card cluster">
+      <div class="card-title">Cluster 2 &middot; Gold <span class="cpus">CPU 4&ndash;6</span></div>
+      <div class="kv"><span>Governor</span><b id="c-gold-gov">&mdash;</b></div>
+      <div class="kv"><span>Current</span><b id="c-gold-cur">&mdash;</b></div>
+      <div class="kv"><span>Min</span><b id="c-gold-min">&mdash;</b></div>
+      <div class="kv"><span>Max</span><b id="c-gold-max">&mdash;</b></div>
+    </div>
+    <div class="card cluster">
+      <div class="card-title">Cluster 3 &middot; Prime <span class="cpus">CPU 7</span></div>
+      <div class="kv"><span>Governor</span><b id="c-prime-gov">&mdash;</b></div>
+      <div class="kv"><span>Current</span><b id="c-prime-cur">&mdash;</b></div>
+      <div class="kv"><span>Min</span><b id="c-prime-min">&mdash;</b></div>
+      <div class="kv"><span>Max</span><b id="c-prime-max">&mdash;</b></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-title">CPU Cores <span class="cpus">live</span></div>
+    <div class="chips" id="coreChips"></div>
+  </section>
+
+  <section class="card">
+    <div class="card-title">GPU &middot; Adreno 650 <span class="cpus">governor only</span></div>
+    <div class="kv"><span>Governor</span><b id="gpuGov">&mdash;</b></div>
+    <div class="kv"><span>Current</span><b id="gpuCur">&mdash;</b></div>
+  </section>
+</main>
+
+<div id="overlay" class="overlay hidden">
+  <div class="spinner"></div>
+  <div id="overlayText">Applying&hellip;</div>
+</div>
+
+<div id="popup" class="popup hidden">
+  <div id="popupTitle"></div>
+  <div id="popupDetail"></div>
+</div>
+
+<div id="offline" class="offline hidden">Server stopped &mdash; reopen from the KernelSU action button</div>
+
+<script src="app.js"></script>
+</body>
+</html>

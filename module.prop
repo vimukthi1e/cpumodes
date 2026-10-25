@@ -1,0 +1,6 @@
+id=cpumodes
+name=CPU Mode Control
+version=v1.0.3
+versionCode=4
+author=ZCode
+description=Performance / Schedutil / PowerSave CPU+GPU governor switcher with localhost WebUI (open via action button). Never changes anything at boot. Tuned for SM-G981N.
